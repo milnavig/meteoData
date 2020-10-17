@@ -8,7 +8,7 @@ const crypto = require("crypto");
 const fetch = require("node-fetch");
 
 const userTemperature = require('../models/userTemperature');
-const Temperature = require('../models/Temperature');
+const Temperature = require('../models/temperature');
 
 var router = express.Router();
 
