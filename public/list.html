@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- https://www.youtube.com/watch?v=RuYG3RjjhaU -->
+    <title>Weather</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet"> 
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js" integrity="sha256-JmvOoLtYsmqlsWxa7mDSLMwa6dZ9rrIdtrrVYRnDRH0=" crossorigin="anonymous"></script>
+    <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--<link rel="manifest" href="/manifest.json">-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+       integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+       crossorigin=""/>
+    
+    <meta name="theme-color" content="#242424">
+    <!--<link rel="icon" href="/img/logo-48x48.ico">-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body id="add">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#"><img src="images/icon.png" id="icon"/></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Main<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/add.html">Add</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/list.html">List</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/auth.html">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register.html">Singup</a>
+          </li>
+        </ul>
+        <span class="navbar-text">
+          MeteoSystem
+        </span>
+      </div>
+    </nav>
+    
+    <table class="table">
+        <thead>
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">Longtitude</th>
+              <th scope="col">Latitude</th>
+              <th scope="col">City</th>
+              <th scope="col">Date</th>
+              <th scope="col">Air temperature</th>
+              <th scope="col">Water temperature</th>
+              <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody id="my-list">
+        </tbody>
+    </table>
+    
+    <script>
+        
+        function getCookie(name) {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+        
+        fetch("https://afternoon-badlands-72919.herokuapp.com/data/get", {
+            method: 'GET',
+            headers: {'Authorization': 'bearer ' + getCookie("user") }
+        }).then((response) => {
+            return response.json();
+        }).then((res) => {
+            console.log(res);
+            res[0].meteo.forEach((value) => {
+                $('#my-list').append('<tr><td>'+ value.record +'</td><td>' + value.lng + '</td><td>' + value.lat + '</td><td>' + value.city + '</td><td>' + value.date + '</td><td>'+ value.air +'</td><td>'+ value.water +'</td><td><input type="button" onClick="sendDel(\'' + value._id + '\')" value="Delete" /></td></tr>');
+            });
+            //window.location.href = "http://localhost:3000/list.html";
+        });
+        
+        function sendDel(id) {
+            fetch("https://afternoon-badlands-72919.herokuapp.com/data/remove/" + id, {
+                method: 'DELETE',
+                headers: {'Authorization': 'bearer ' + getCookie("user") }
+            }).then((response) => {
+                return response.json();
+            }).then((res) => {
+                console.log(res);
+                window.location.href = "https://afternoon-badlands-72919.herokuapp.com/list.html";
+            })
+        }
+          
+    </script> 
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+ 
+</body>
+</html>
