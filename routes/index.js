@@ -59,10 +59,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.route('/add').post(authenticate.verifyUser, (req, res, next) => {
-    //console.log(req.body);
-    //res.statusCode = 200;
-    //res.setHeader('Content-Type', 'application/json');
-    //res.json("Ok");
     console.log(req.body);
     console.log(req.user._id);
     
@@ -77,7 +73,6 @@ router.route('/add').post(authenticate.verifyUser, (req, res, next) => {
         userTemperature.findOne({ user: req.user._id}).then((temperature) => { 
         
                 if (temperature == null) {
-                    //console.log("Here" + req.body);
                     userTemperature.create({user: req.user._id, meteo: temp._id})
                     .then((myMeteo) => {
                         console.log('Meteo Created ', myMeteo);
@@ -88,7 +83,6 @@ router.route('/add').post(authenticate.verifyUser, (req, res, next) => {
                     .catch((err) => next(err));
                 }
                 else {
-                    //console.log("Here2");
                     temperature.meteo.push(temp._id);
 
                     temperature.save()
@@ -107,8 +101,6 @@ router.route('/add').post(authenticate.verifyUser, (req, res, next) => {
         }, (err) => next(err))
         .catch((err) => next(err));
     });
-    
-    
 });
 
 router.route('/get').get(authenticate.verifyUser, (req,res,next) => {
