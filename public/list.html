@@ -77,7 +77,7 @@
           if (parts.length === 2) return parts.pop().split(';').shift();
         }
         
-        fetch("https://afternoon-badlands-72919.herokuapp.com/data/get", {
+        fetch("http://localhost:3000/data/get", {
             method: 'GET',
             headers: {'Authorization': 'bearer ' + getCookie("user") }
         }).then((response) => {
@@ -91,14 +91,14 @@
         });
         
         function sendDel(id) {
-            fetch("https://afternoon-badlands-72919.herokuapp.com/data/remove/" + id, {
+            fetch("http://localhost:3000/data/remove/" + id, {
                 method: 'DELETE',
                 headers: {'Authorization': 'bearer ' + getCookie("user") }
             }).then((response) => {
                 return response.json();
             }).then((res) => {
                 console.log(res);
-                window.location.href = "https://afternoon-badlands-72919.herokuapp.com/list.html";
+                window.location.href = "http://localhost:3000/list.html";
             })
         }
           

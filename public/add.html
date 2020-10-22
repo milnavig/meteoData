@@ -112,7 +112,7 @@
             data.water = water;
             
         
-            fetch("https://afternoon-badlands-72919.herokuapp.com/data/add", {
+            fetch("http://localhost:3000/data/add", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json',
                          'Authorization': 'bearer ' + getCookie("user") },
@@ -121,7 +121,7 @@
                 return response.json();
             }).then((res) => {
                 console.log(res);
-                window.location.href = "https://afternoon-badlands-72919.herokuapp.com/list.html";
+                window.location.href = "http://localhost:3000/list.html";
             });
           });
         });

@@ -52,7 +52,7 @@
       </div>
     </nav>
     
-    <form action="https://afternoon-badlands-72919.herokuapp.com/users/login" method="post" id="my-form">
+    <form action="http://localhost:3000/users/login" method="post" id="my-form">
         <div class="form-group">
             <label for="username">Username</label>
             <input type="text" size="40" id="username" name="username" class="form-control"/>
@@ -77,7 +77,7 @@
             data.username = username;
             data.password = password;
         
-            fetch("https://afternoon-badlands-72919.herokuapp.com/users/signup", {
+            fetch("http://localhost:3000/users/signup", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
                 body: JSON.stringify(data)
@@ -85,7 +85,7 @@
                 return response.json();
             }).then((res) => {
                 console.log(res);
-                window.location.href = "https://afternoon-badlands-72919.herokuapp.com/auth.html";
+                window.location.href = "http://localhost:3000/auth.html";
             });
           });
         });
