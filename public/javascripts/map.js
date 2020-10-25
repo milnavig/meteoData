@@ -85,13 +85,13 @@ var popup = L.popup();
 
 function onMapClick(e) {
     
-    fetch('https://afternoon-badlands-72919.herokuapp.com/data?lon=' + e.latlng.lng + '&lat=' + e.latlng.lat, {
+    fetch('http://localhost:3000/data?lon=' + e.latlng.lng + '&lat=' + e.latlng.lat, {
     mode: 'no-cors'}).then((response) => {
                 return response.json();
             }).then((res) => {
                 popup
                     .setLatLng(e.latlng)
-                    .setContent("The temperature <b>at</b> " + e.latlng.toString() + "<br/>Temperature: "+ res.main.temp +"°<br/>Feels like: " + res.main.feels_like + "°<br/><a href='https://afternoon-badlands-72919.herokuapp.com/add.html?lon=" + e.latlng.lng + "&lat=" + e.latlng.lat + "'>Додати</a>")
+                    .setContent("The temperature <b>at</b> " + e.latlng.toString() + "<br/>Temperature: "+ res.main.temp +"°<br/>Feels like: " + res.main.feels_like + "°<br/><a href='http://localhost:3000/add.html?lon=" + e.latlng.lng + "&lat=" + e.latlng.lat + "'>Додати</a>")
                     .openOn(mymap);
                 console.log(e);
                 console.log(res);
